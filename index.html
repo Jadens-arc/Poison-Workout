@@ -107,10 +107,17 @@
 
     function workout(time) {
       if (time == 0) {
-        alert("Workout done refresh page to start again");
+        textBox.innerText = "Restart";
+        textBox.addEventListener("click", () => {
+          location.reload();
+        });
         return;
       }
-      textBox.innerText = time;
+      if (time) {
+        textBox.innerText = time;
+      } else {
+        textBox.innerText = "Infinity";
+      }
       textBox.style.backgroundColor = "aquamarine";
 
       if (Math.random() > 0.5) {
