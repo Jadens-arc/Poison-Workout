@@ -13,12 +13,15 @@
       }
       body {
         font-family: sans-serif;
-        padding: 10px;
+        padding: 20px;
         min-height: 100vh;
         background-image: linear-gradient(
           rgb(163, 228, 163),
           rgb(187, 202, 187)
         );
+        display: flex;
+        flex-direction: column;
+        align-items: center;
       }
       .title {
         font-family: "Potta One", cursive;
@@ -43,6 +46,8 @@
         width: fit-content;
         padding: 20px;
         margin: 0 auto;
+        outline: none;
+        border: none;
         border-radius: 7px;
         box-shadow: 0px 0px 0px 10px black;
       }
@@ -55,7 +60,9 @@
   </head>
   <body>
     <h1 class="title">Poison</h1>
-    <div id="text-container" class="container">Start</div>
+    <button onclick="startWorkout()" id="text-container" class="container">
+      Start
+    </button>
   </body>
   <script>
     const textBox = document.getElementById("text-container");
@@ -64,18 +71,38 @@
     const level = new Audio("Level.mp3");
     let running = false;
 
+    document.body.addEventListener(
+      "touchstart",
+      function () {
+        if (audiosWeWantToUnlock) {
+          for (let audio of audiosWeWantToUnlock) {
+            audio.play();
+            audio.pause();
+            audio.currentTime = 0;
+          }
+          audiosWeWantToUnlock = null;
+        }
+      },
+      false
+    );
+    //where earlier you did:
+    var audiosWeWantToUnlock = [];
+    audiosWeWantToUnlock.push(shot);
+    audiosWeWantToUnlock.push(sprawl);
+    audiosWeWantToUnlock.push(level);
+
     time = parseInt(prompt("How long do you want to work out (in minutes)"));
 
     seconds = time * 60;
 
     let workouts = ["Shot", "Sprawl", "Level"];
 
-    textBox.addEventListener("click", (e) => {
+    function startWorkout() {
       if (!running) {
         workout(seconds);
         running = true;
       }
-    });
+    }
 
     function workout(time) {
       if (time == 0) {
